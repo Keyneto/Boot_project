@@ -1,13 +1,14 @@
 package boot_project.model;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -43,11 +44,27 @@ public class MyUser implements UserDetails {
 
     }
 
-    public MyUser(String userName, String email, String password, Role role) {
+    public MyUser(String userName, String email, String password, Set<Role> roles) {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.roles.add(role);
+        this.roles = roles;
+    }
+
+    public String getRolesToString(){
+        return roles.stream()
+                .map((s) -> s.getRole().substring(5))
+                .sorted()
+                .reduce((s1, s2) -> s1 + " " + s2)
+                .get();
+    }
+
+    public String isAdminOrUser() {
+        List<String> rolesCurrentUser =  roles.stream().map((s) -> s.getRole()).collect(Collectors.toList());
+        if (rolesCurrentUser.contains("ROLE_ADMIN")) {
+            return "ROLE_ADMIN";
+        }
+        return "ROLE_USER";
     }
 
     public Long getId() {
@@ -82,8 +99,8 @@ public class MyUser implements UserDetails {
         return roles;
     }
 
-    public void setRoles(Role role) {
-        roles.add(role);
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -118,9 +135,6 @@ public class MyUser implements UserDetails {
 
     @Override
     public String toString() {
-        return "User info: name "
-                + userName + ", "
-                + email + ", "
-                + roles.size() + ".";
+        return email + " with roles: {в разработке}";
     }
 }
