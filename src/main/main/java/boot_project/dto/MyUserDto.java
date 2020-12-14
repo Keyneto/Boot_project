@@ -11,6 +11,8 @@ public class MyUserDto {
 
     private String role;
 
+    private String password;
+
     public MyUserDto(MyUser user) {
         this.id = user.getId();
         this.userName = user.getUserName();
@@ -22,6 +24,14 @@ public class MyUserDto {
 
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }
@@ -31,8 +41,15 @@ public class MyUserDto {
     }
 
     public String getRole() {
+        if (role.equals("ROLE_ADMIN")) {
+            return "ADMIN USER";
+        } else if (role.equals("ROLE_USER")) {
+            return "USER";
+        }
         return role;
     }
+
+
 
     public void setRole(String role) {
         this.role = role;

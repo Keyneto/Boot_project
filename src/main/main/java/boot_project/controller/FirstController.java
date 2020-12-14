@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping
-public class MainController {
+public class FirstController {
 
-    @GetMapping("/error")
-    public String error() {
-        return "error";
+    @GetMapping("/main_page")
+    public String mainPage() {
+        return "index";
     }
 }
