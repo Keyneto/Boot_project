@@ -32,7 +32,7 @@ public class Role implements GrantedAuthority {
 
     }
 
-    public Role(String role) {
+    public Role( String role) {
         this.role = role;
     }
 

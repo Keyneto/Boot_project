@@ -1,12 +1,11 @@
 package boot_project.controller.rest_controller;
 
-
 import boot_project.dto.MyUserDto;
 import boot_project.model.MyUser;
 import boot_project.model.Role;
+import boot_project.service.RoleService;
 import boot_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -19,9 +18,11 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
+        this.roleService = roleService;
         this.userService = userService;
     }
 
@@ -74,14 +75,9 @@ public class AdminController {
         return new MyUserDto(myUser);
     }
 
-    private Set<Role> getRolesSet(String role) {
+    private Set<Role> getRolesSet(Set<String> role) {
         Set<Role> roles = new HashSet();
-        if (role.equals("ADMIN USER")) {
-            roles.add(new Role("ROLE_ADMIN"));
-            roles.add(new Role("ROLE_USER"));
-        } else {
-            roles.add(new Role("ROLE_USER"));
-        }
+        role.stream().forEachOrdered(x -> roles.add(roleService.findByRole(x)));
         return roles;
     }
 }

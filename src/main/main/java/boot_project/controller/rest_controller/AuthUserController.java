@@ -17,7 +17,7 @@ public class AuthUserController {
         MyUserDto myUserDto = new MyUserDto();
         myUserDto.setId(user.getId());
         myUserDto.setUserName(user.getUserName());
-        myUserDto.setRole(user.getRolesToString());
+        myUserDto.setRole(user.getRolesSetString());
         myUserDto.setEmail(user.getEmail());
         return myUserDto;
     }

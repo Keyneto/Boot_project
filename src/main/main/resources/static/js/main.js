@@ -8,13 +8,14 @@ $(document).ready(function ($) {
 
     jQuery.getJSON('/current_user', function(data){
 
-        document.getElementById("currentEmail").innerHTML = data.email;
-        document.getElementById("currentRole").innerHTML = data.role;
+        getElById("currentEmail").innerHTML = data.email;
+        getElById("currentRole").innerHTML = getRoleToString(data.role);
     });
 
     jQuery.getJSON('/current_user', function(info){
 
-        if (info.role == 'USER') {
+        if (info.role.indexOf('ROLE_USER') == 0 &&
+            info.role.indexOf('ROLE_ADMIN') == -1) {
             document.getElementById('tabSidebar').innerHTML = "" +
                 "<li class=\"nav-item\">\n" +
                 "    <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#user\">User</a>\n" +
@@ -27,10 +28,11 @@ $(document).ready(function ($) {
 
     jQuery.getJSON('/current_user', function(data){
 
-        document.getElementById("currentUserId").innerHTML = data.id;
-        document.getElementById("currentUserUserName").innerHTML = data.userName;
-        document.getElementById("currentUserEmail").innerHTML = data.email;
-        document.getElementById("currentUserRole").innerHTML = data.role;
+        getElById("currentUserId").innerHTML = data.id;
+        getElById("currentUserUserName").innerHTML = data.userName;
+        getElById("currentUserEmail").innerHTML = data.email;
+        getElById("currentUserRole").innerHTML = getRoleToString(data.role);
+
     });
 
     jQuery('.currentUserPage #createNewUserButton').on('click', function (event) {
@@ -38,10 +40,10 @@ $(document).ready(function ($) {
         event.preventDefault();
 
         let newUser = {
-            userName: document.getElementById("newUsername").value,
-            email: document.getElementById("newEmail").value,
-            password: document.getElementById("newPassword").value,
-            role: document.getElementById("newRole").value,
+            userName: getElById("newUsername").value,
+            email: getElById("newEmail").value,
+            password: getElById("newPassword").value,
+            role: getUsedSelectElement('newRole')
         };
 
         fetch('/admin', {
@@ -105,11 +107,11 @@ function deleteModal(id) {
 function editUser() {
 
     let userInfo = {
-        id: document.getElementById("editModalId").value,
-        userName: document.getElementById("editModalUserName").value,
-        email: document.getElementById("editModalEmail").value,
-        password: document.getElementById("editModalPassword").value,
-        role: document.getElementById("editModalRole").value
+        id: getElById("editModalId").value,
+        userName: getElById("editModalUserName").value,
+        email: getElById("editModalEmail").value,
+        password: getElById("editModalPassword").value,
+        role: getUsedSelectElement('editModalRole')
     };
 
     fetch('/admin', {
@@ -125,7 +127,7 @@ function editUser() {
 function deleteUser() {
 
     let idUser = {
-        id: document.getElementById("deleteModalId").value,
+        id: getElById("deleteModalId").value,
     };
 
     fetch('/admin', {
@@ -147,7 +149,7 @@ function JsonToTable(data) {
             + "<td>" + x.id + "</td>"
             + "<td>" + x.userName + "</td>"
             + "<td>" + x.email + "</td>"
-            + "<td>" + x.role + "</td>"
+            + "<td>" + getRoleToString(x.role) + "</td>"
             + "<td><a onclick=\"editModal("+x.id+");\" " +
             "class=\"btn btn-info\">Edit</a></td>"
             + "<td><a onclick=\"deleteModal("+x.id+");\" " +
@@ -155,7 +157,31 @@ function JsonToTable(data) {
             + "</tr>";
     })
 
-    document.getElementById("data").innerHTML = newCode;
+    getElById("data").innerHTML = newCode;
+}
+
+function getRoleToString(roles) {
+    return roles.join(' ').split('ROLE_').join('');
+}
+
+function getElById(id) {
+    return document.getElementById(id);
+}
+
+function getUsedSelectElement(idElement) {
+
+    let len= getElById(idElement).options.length;
+    let UsedSelectElements = new Array;
+    let i =0;
+
+    for (let n = 0; n < len; n++) {
+        if (getElById(idElement).options[n].selected == true) {
+            UsedSelectElements[i] = getElById(idElement).options[n].value;
+            i++;
+        }
+    }
+
+    return UsedSelectElements;
 }
 
 

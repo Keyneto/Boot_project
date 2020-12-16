@@ -140,10 +140,12 @@
                                                         <div class="text-center font-weight-bold">
                                                             <label for="newRole" class="form-control-label">Role</label>
                                                         </div>
-                                                        <select for="role" id="newRole" name="role" multiple size="2"
+                                                        <select for="role" id="newRole" name="role[]" multiple size="2"
                                                                 class="form-control form-control-sm">
-                                                            <option value="ROLE_ADMIN" adminSelect>ADMIN</option>
-                                                            <option value="ROLE_USER" userSelect>USER</option>
+                                                            <option id="newAdminSelect" value="ROLE_ADMIN"
+                                                                    adminSelect>ADMIN</option>
+                                                            <option id="newUserSelect" value="ROLE_USER"
+                                                                    userSelect>USER</option>
                                                         </select>
                                                     </div>
                                                     <div class="row justify-content-center">
@@ -209,10 +211,9 @@
     </div>
 </div>
 
-<div class="myForm">
-
 <!------------------------------------ Edit modal window -------------------------------------------------------------->
 
+<div class="myForm">
     <form>
         <div class="modal" id="editModal" tabindex="-1" role="dialog"
              aria-labelledby="editModalLabel" aria-hidden="true">
@@ -255,10 +256,12 @@
                                     <div class="text-center font-weight-bold">
                                         <label for="editModalRole" class="form-control-label">Role</label>
                                     </div>
-                                    <select for="role" id="editModalRole" name="role" multiple size="2"
+                                    <select for="role" id="editModalRole" name="role[]" multiple size="2"
                                             class="form-control form-control-sm">
-                                        <option value="ROLE_ADMIN" adminSelect>ADMIN</option>
-                                        <option value="ROLE_USER" userSelect>USER</option>
+                                        <option id="editAdminSelect" value="ROLE_ADMIN"
+                                                adminSelect>ADMIN</option>
+                                        <option id="editUserSelect" value="ROLE_USER"
+                                                userSelect>USER</option>
                                     </select>
                                 </div>
                             </div>

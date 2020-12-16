@@ -59,12 +59,8 @@ public class MyUser implements UserDetails {
                 .get();
     }
 
-    public String isAdminOrUser() {
-        List<String> rolesCurrentUser =  roles.stream().map((s) -> s.getRole()).collect(Collectors.toList());
-        if (rolesCurrentUser.contains("ROLE_ADMIN")) {
-            return "ROLE_ADMIN";
-        }
-        return "ROLE_USER";
+    public Set<String> getRolesSetString() {
+        return roles.stream().map(x -> x.getRole()).collect(Collectors.toSet());
     }
 
     public Long getId() {

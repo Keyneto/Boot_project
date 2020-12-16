@@ -2,6 +2,8 @@ package boot_project.dto;
 
 import boot_project.model.MyUser;
 
+import java.util.Set;
+
 public class MyUserDto {
     private Long id;
 
@@ -9,7 +11,7 @@ public class MyUserDto {
 
     private String email;
 
-    private String role;
+    private Set<String> role;
 
     private String password;
 
@@ -17,7 +19,7 @@ public class MyUserDto {
         this.id = user.getId();
         this.userName = user.getUserName();
         this.email = user.getEmail();
-        this.role = user.isAdminOrUser();
+        this.role = user.getRolesSetString();
     }
 
     public MyUserDto() {
@@ -40,18 +42,13 @@ public class MyUserDto {
         this.id = id;
     }
 
-    public String getRole() {
-        if (role.equals("ROLE_ADMIN")) {
-            return "ADMIN USER";
-        } else if (role.equals("ROLE_USER")) {
-            return "USER";
-        }
+    public Set<String> getRole() {
         return role;
     }
 
 
 
-    public void setRole(String role) {
+    public void setRole(Set<String> role) {
         this.role = role;
     }
 
