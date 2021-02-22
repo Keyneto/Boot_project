@@ -46,8 +46,6 @@ public class MyUserDto {
         return role;
     }
 
-
-
     public void setRole(Set<String> role) {
         this.role = role;
     }

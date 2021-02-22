@@ -8,7 +8,6 @@ import boot_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,7 +67,7 @@ public class AdminController {
     */
 
     private List<MyUserDto> getMyUserDtoList(List<MyUser> myUserList) {
-        return myUserList.stream().map(x -> new MyUserDto(x)).collect(Collectors.toList());
+        return myUserList.stream().map(MyUserDto::new).collect(Collectors.toList());
     }
 
     private MyUserDto getMyUserDto(MyUser myUser){
@@ -76,8 +75,6 @@ public class AdminController {
     }
 
     private Set<Role> getRolesSet(Set<String> role) {
-        Set<Role> roles = new HashSet();
-        role.stream().forEachOrdered(x -> roles.add(roleService.findByRole(x)));
-        return roles;
+        return role.stream().map(roleService::findByRole).collect(Collectors.toSet());
     }
 }

@@ -51,16 +51,8 @@ public class MyUser implements UserDetails {
         this.roles = roles;
     }
 
-    public String getRolesToString(){
-        return roles.stream()
-                .map((s) -> s.getRole().substring(5))
-                .sorted()
-                .reduce((s1, s2) -> s1 + " " + s2)
-                .get();
-    }
-
     public Set<String> getRolesSetString() {
-        return roles.stream().map(x -> x.getRole()).collect(Collectors.toSet());
+        return roles.stream().map(Role::getRole).collect(Collectors.toSet());
     }
 
     public Long getId() {

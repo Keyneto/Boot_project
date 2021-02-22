@@ -14,8 +14,9 @@ $(document).ready(function ($) {
 
     jQuery.getJSON('/current_user', function(info){
 
-        if (info.role.indexOf('ROLE_USER') == 0 &&
-            info.role.indexOf('ROLE_ADMIN') == -1) {
+        if (info.role.indexOf('ROLE_USER') === 0 &&
+            info.role.indexOf('ROLE_ADMIN') === -1) {
+
             document.getElementById('tabSidebar').innerHTML = "" +
                 "<li class=\"nav-item\">\n" +
                 "    <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#user\">User</a>\n" +
@@ -175,7 +176,7 @@ function getUsedSelectElement(idElement) {
     let i =0;
 
     for (let n = 0; n < len; n++) {
-        if (getElById(idElement).options[n].selected == true) {
+        if (getElById(idElement).options[n].selected === true) {
             UsedSelectElements[i] = getElById(idElement).options[n].value;
             i++;
         }

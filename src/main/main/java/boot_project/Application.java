@@ -5,6 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/*
+	имеет ли базовый класс доступ к переменным анонимного класса?
+	статическое и динамическое связывание
+ */
+
 @SpringBootApplication
 public class Application implements WebMvcConfigurer {
 
